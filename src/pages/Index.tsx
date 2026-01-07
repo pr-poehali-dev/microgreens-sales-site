@@ -31,7 +31,7 @@ const products: Product[] = [
     category: 'microgreens',
     price: 450,
     unit: '100г',
-    image: 'https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/1b0b72f3-f92f-4cd3-aafb-ac2afab75fda.jpg',
+    image: 'https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/c8829854-7d4b-4a1d-b282-269bda62f000.jpg',
     description: 'Острая, сочная микрозелень с ярким вкусом',
     availability: true,
   },
@@ -41,7 +41,7 @@ const products: Product[] = [
     category: 'microgreens',
     price: 380,
     unit: '100г',
-    image: 'https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/e9d749ef-0a73-4e1a-876b-1e7299531ded.jpg',
+    image: 'https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/80d95f26-e931-444f-814a-f9fe54481706.jpg',
     description: 'Нежная зелень с легким сладковатым привкусом',
     availability: true,
   },
@@ -51,7 +51,7 @@ const products: Product[] = [
     category: 'microgreens',
     price: 420,
     unit: '100г',
-    image: 'https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/e9d749ef-0a73-4e1a-876b-1e7299531ded.jpg',
+    image: 'https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/bd4d997a-71db-4fdc-94cd-75493ddf7341.jpg',
     description: 'Хрустящая зелень с ореховым вкусом',
     availability: true,
   },
@@ -61,7 +61,7 @@ const products: Product[] = [
     category: 'flowers',
     price: 850,
     unit: 'букет',
-    image: 'https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/72cf0352-7eb2-44aa-931b-2e2e896f5d31.jpg',
+    image: 'https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/502d45d8-bcf5-4ad1-bcdf-94b4e27980b5.jpg',
     description: 'Микс из виолы, настурции и календулы',
     availability: true,
   },
@@ -71,7 +71,7 @@ const products: Product[] = [
     category: 'flowers',
     price: 600,
     unit: '50шт',
-    image: 'https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/72cf0352-7eb2-44aa-931b-2e2e896f5d31.jpg',
+    image: 'https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/70381491-b8cf-400c-93a5-8ef097d3a1f5.jpg',
     description: 'Нежные фиолетовые цветы для декора блюд',
     availability: true,
   },
@@ -81,7 +81,7 @@ const products: Product[] = [
     category: 'microgreens',
     price: 490,
     unit: '100г',
-    image: 'https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/1b0b72f3-f92f-4cd3-aafb-ac2afab75fda.jpg',
+    image: 'https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/ebe039b0-461f-4de3-bafd-374994791dca.jpg',
     description: 'Пикантная зелень с горчичными нотками',
     availability: true,
   },
@@ -337,7 +337,7 @@ export default function Index() {
             </div>
             <div className="relative">
               <img
-                src="https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/1b0b72f3-f92f-4cd3-aafb-ac2afab75fda.jpg"
+                src="https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/65bd4174-8fb9-4367-bcb2-30108505f33c.jpg"
                 alt="Свежая микрозелень"
                 className="rounded-2xl shadow-2xl hover-scale"
               />
@@ -500,7 +500,7 @@ export default function Index() {
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <img
-              src="https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/e9d749ef-0a73-4e1a-876b-1e7299531ded.jpg"
+              src="https://cdn.poehali.dev/projects/7333f730-5ff7-4620-8135-22d17be76692/files/80d95f26-e931-444f-814a-f9fe54481706.jpg"
               alt="Наша продукция"
               className="rounded-2xl shadow-xl hover-scale"
             />
