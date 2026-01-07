@@ -5,6 +5,12 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { toast } from '@/components/ui/use-toast';
 import Icon from '@/components/ui/icon';
 
 interface Product {
@@ -108,6 +114,18 @@ const reviews = [
 export default function Index() {
   const [cart, setCart] = useState<{ product: Product; quantity: number }[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [orderForm, setOrderForm] = useState({
+    restaurantName: '',
+    contactPerson: '',
+    phone: '',
+    email: '',
+    address: '',
+    deliveryDate: '',
+    deliveryTime: '',
+    paymentMethod: '',
+    comment: '',
+  });
 
   const addToCart = (product: Product) => {
     const existingItem = cart.find((item) => item.product.id === product.id);
@@ -140,6 +158,43 @@ export default function Index() {
 
   const cartTotal = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  const handleCheckout = () => {
+    setIsCartOpen(false);
+    setIsCheckoutOpen(true);
+  };
+
+  const handleOrderSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!orderForm.restaurantName || !orderForm.contactPerson || !orderForm.phone || !orderForm.email) {
+      toast({
+        title: 'Заполните обязательные поля',
+        description: 'Название ресторана, контактное лицо, телефон и email обязательны для заполнения.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    toast({
+      title: 'Заказ оформлен!',
+      description: `Ваш заказ на сумму ${cartTotal} ₽ принят. Мы свяжемся с вами в ближайшее время.`,
+    });
+
+    setIsCheckoutOpen(false);
+    setCart([]);
+    setOrderForm({
+      restaurantName: '',
+      contactPerson: '',
+      phone: '',
+      email: '',
+      address: '',
+      deliveryDate: '',
+      deliveryTime: '',
+      paymentMethod: '',
+      comment: '',
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
@@ -233,7 +288,7 @@ export default function Index() {
                     <span>Итого:</span>
                     <span>{cartTotal} ₽</span>
                   </div>
-                  <Button className="w-full" size="lg">
+                  <Button className="w-full" size="lg" onClick={handleCheckout}>
                     Оформить заказ
                   </Button>
                 </div>
@@ -731,6 +786,164 @@ export default function Index() {
           </div>
         </div>
       </footer>
+
+      <Dialog open={isCheckoutOpen} onOpenChange={setIsCheckoutOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Оформление заказа</DialogTitle>
+            <DialogDescription>
+              Заполните форму, и наш менеджер свяжется с вами для подтверждения заказа
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleOrderSubmit} className="space-y-6">
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="restaurantName">
+                    Название ресторана <span className="text-destructive">*</span>
+                  </Label>
+                  <Input
+                    id="restaurantName"
+                    placeholder="Ресторан 'Белый Кролик'"
+                    value={orderForm.restaurantName}
+                    onChange={(e) => setOrderForm({ ...orderForm, restaurantName: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="contactPerson">
+                    Контактное лицо <span className="text-destructive">*</span>
+                  </Label>
+                  <Input
+                    id="contactPerson"
+                    placeholder="Иван Иванов"
+                    value={orderForm.contactPerson}
+                    onChange={(e) => setOrderForm({ ...orderForm, contactPerson: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="phone">
+                    Телефон <span className="text-destructive">*</span>
+                  </Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="+7 (900) 123-45-67"
+                    value={orderForm.phone}
+                    onChange={(e) => setOrderForm({ ...orderForm, phone: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email">
+                    Email <span className="text-destructive">*</span>
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="restaurant@example.com"
+                    value={orderForm.email}
+                    onChange={(e) => setOrderForm({ ...orderForm, email: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="address">Адрес доставки</Label>
+                <Input
+                  id="address"
+                  placeholder="Москва, ул. Пушкина, д. 10"
+                  value={orderForm.address}
+                  onChange={(e) => setOrderForm({ ...orderForm, address: e.target.value })}
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="deliveryDate">Желаемая дата доставки</Label>
+                  <Input
+                    id="deliveryDate"
+                    type="date"
+                    value={orderForm.deliveryDate}
+                    onChange={(e) => setOrderForm({ ...orderForm, deliveryDate: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="deliveryTime">Желаемое время</Label>
+                  <Input
+                    id="deliveryTime"
+                    type="time"
+                    value={orderForm.deliveryTime}
+                    onChange={(e) => setOrderForm({ ...orderForm, deliveryTime: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="paymentMethod">Способ оплаты</Label>
+                <Select
+                  value={orderForm.paymentMethod}
+                  onValueChange={(value) => setOrderForm({ ...orderForm, paymentMethod: value })}
+                >
+                  <SelectTrigger id="paymentMethod">
+                    <SelectValue placeholder="Выберите способ оплаты" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="cash">Наличными курьеру</SelectItem>
+                    <SelectItem value="card">Банковской картой</SelectItem>
+                    <SelectItem value="invoice">Безналичный расчёт</SelectItem>
+                    <SelectItem value="deferred">Отсрочка платежа</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="comment">Комментарий к заказу</Label>
+                <Textarea
+                  id="comment"
+                  placeholder="Дополнительные пожелания или особые условия доставки..."
+                  value={orderForm.comment}
+                  onChange={(e) => setOrderForm({ ...orderForm, comment: e.target.value })}
+                  rows={3}
+                />
+              </div>
+            </div>
+
+            <div className="border-t pt-4">
+              <h3 className="font-bold text-lg mb-3">Состав заказа:</h3>
+              <div className="space-y-2 mb-4">
+                {cart.map((item) => (
+                  <div key={item.product.id} className="flex justify-between text-sm">
+                    <span>
+                      {item.product.name} × {item.quantity}
+                    </span>
+                    <span className="font-medium">{item.product.price * item.quantity} ₽</span>
+                  </div>
+                ))}
+              </div>
+              <div className="flex justify-between text-lg font-bold border-t pt-3">
+                <span>Итого:</span>
+                <span className="text-primary">{cartTotal} ₽</span>
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <Button type="button" variant="outline" className="flex-1" onClick={() => setIsCheckoutOpen(false)}>
+                Отмена
+              </Button>
+              <Button type="submit" className="flex-1">
+                <Icon name="Check" className="mr-2 h-4 w-4" />
+                Отправить заказ
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
